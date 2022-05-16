@@ -16,7 +16,6 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
         _eventManager = EventManager.GetEventManager();
     }
 
-    [ContextMenu ("TakeDamage")]
     public void TakeDamage(float damage)
     {
         _stats.HP -= damage;
