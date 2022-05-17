@@ -7,6 +7,7 @@ public struct CharacterStats
     [HideInInspector] public float HP;
 
     public float Damage;
+    public float AttackTime;
 
     public float Speed;
     public void Init ()

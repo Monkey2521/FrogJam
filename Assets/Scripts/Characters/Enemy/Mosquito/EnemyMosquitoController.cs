@@ -8,6 +8,9 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
     public float MaxHP => _stats.MaxHP;
     public float HP => _stats.HP;
     public float Damage => _stats.Damage;
+    public float AttackTime => _stats.AttackTime;
+    private float _attackTimer = 0f;
+    private bool _isSucking = false;
     public float Speed => _stats.Speed;
 
     private EventManager _eventManager;
@@ -34,28 +37,37 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        _attackTimer -= Time.deltaTime;
+
+        if (_attackTimer <= 0f) MakeDamage(collision as IDamageable);
+    }
+
     public void TakeDamage(float damage)
     {
         _stats.HP -= damage;
 
         if (_stats.HP <= 0)
         {
-            Spawner.DestroyMosquito(this);
+            _isSucking = false;
+
+            Spawner.AddToPull(this);
             _eventManager.OnEnemyDeath?.Invoke();
         }
     }
 
     public void MakeDamage(IDamageable target)
     {
-        target.TakeDamage(Damage);
+        target.TakeDamage((_isSucking ? Damage * AttackTime : Damage) * GameManager.DifficultyMultiplier);
         _eventManager.OnCharacterTakeDamage?.Invoke(this, target, Damage);
 
-        Spawner.DestroyMosquito(this);
+        _attackTimer = AttackTime;
+        _isSucking = true;
     }
 
-    public void Move(GameObject target)
+    public void Move(Vector3 targetPos)
     {
-        Vector3 targetPos = target.transform.position;
         Vector3 currentPos = transform.position;
 
         transform.position += new Vector3
@@ -63,6 +75,6 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
                                     targetPos.x - currentPos.x,
                                     targetPos.y - currentPos.y, 
                                     currentPos.z
-                                ).normalized * Speed * Time.deltaTime;
+                                ).normalized * Speed * GameManager.DifficultyMultiplier * Time.deltaTime;
     }
 }

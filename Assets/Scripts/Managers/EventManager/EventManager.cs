@@ -10,6 +10,7 @@ public class EventManager : MonoBehaviour
     [Header("Events")]
     public UnityEvent OnStartGame;
     public UnityEvent OnInventoryUpdate;
+    public UnityEvent OnEnemySpawned;
     public UnityEvent<IAttackable, IDamageable, float> OnCharacterTakeDamage;
     public UnityEvent OnEnemyDeath;
     public UnityEvent OnPlayerDeath;
@@ -30,4 +31,10 @@ public class EventManager : MonoBehaviour
     }
 
     public static EventManager GetEventManager() => _instance;
+
+    [ContextMenu("Kill enemy")]
+    private void Test()
+    {
+        OnEnemyDeath?.Invoke();
+    }
 }

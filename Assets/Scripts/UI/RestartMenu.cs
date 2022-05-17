@@ -1,22 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RestartMenu : MonoBehaviour
 {
-    private EventManager _eventManager;
+    [SerializeField] private Text _text;
 
-    private void Start()
+    public void ShowRestart()
     {
-        _eventManager = EventManager.GetEventManager();
-        _eventManager.OnPlayerDeath.AddListener(ShowRestart);
-        _eventManager.OnPlayerDeath.AddListener(HideRestart);
+        this.gameObject.SetActive(true);
+        _text.text = "Total score: " + ScoreCounter.Score;
     }
 
-    private void ShowRestart()
-    {
-
-    }
-
-    private void HideRestart()
+    public void HideRestart()
     {
         this.gameObject.SetActive(false);
     }

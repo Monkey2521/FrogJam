@@ -8,13 +8,9 @@ public class ScoreCounter : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private Text _text;
-    private int _score;
+    private static int _score;
+    public static int Score => _score;
     private EventManager _eventManager;
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }
 
     private void Start()
     {

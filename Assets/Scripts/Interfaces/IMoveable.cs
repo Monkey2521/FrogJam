@@ -4,5 +4,5 @@ public interface IMoveable
 {
    public float Speed { get; }
 
-    public void Move(GameObject target);
+    public void Move(Vector3 targetPos);
 }

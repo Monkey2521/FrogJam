@@ -8,12 +8,19 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
     public float MaxHP => _stats.MaxHP;
     public float HP => _stats.HP;
     public float Damage => _stats.Damage;
+    public float AttackTime => _stats.AttackTime;
+    private float _attackTimer = 0;
 
     private EventManager _eventManager;
 
     private void Start()
     {
         _eventManager = EventManager.GetEventManager();
+    }
+
+    public void AttackControl ()
+    {
+        if (_attackTimer > 0) _attackTimer -= Time.deltaTime;
     }
 
     public void TakeDamage(float damage)
@@ -31,5 +38,7 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
     {
         target.TakeDamage(Damage);
         _eventManager.OnCharacterTakeDamage?.Invoke(this, target, Damage);
+
+        _attackTimer = AttackTime;
     }
 }
