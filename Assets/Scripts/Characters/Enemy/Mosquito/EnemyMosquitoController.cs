@@ -31,7 +31,7 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
     {
         if (_isDebug) Debug.Log("Collision with " + collision.name);
 
-        if (collision is IDamageable)
+        if (collision.tag == "Player")
         {
             MakeDamage(collision as IDamageable);
         }
@@ -41,7 +41,7 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
     {
         _attackTimer -= Time.deltaTime;
 
-        if (_attackTimer <= 0f) MakeDamage(collision as IDamageable);
+        if (_attackTimer <= 0f && collision.tag == "Player") MakeDamage(collision as IDamageable);
     }
 
     public void TakeDamage(float damage)

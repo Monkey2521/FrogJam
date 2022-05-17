@@ -4,7 +4,7 @@ using UnityEngine;
 public struct CharacterStats
 {
     public float MaxHP;
-    [HideInInspector] public float HP;
+    public float HP;
 
     public float Damage;
     public float AttackTime;
@@ -14,4 +14,6 @@ public struct CharacterStats
     {
         HP = MaxHP;
     }
+
+
 }
