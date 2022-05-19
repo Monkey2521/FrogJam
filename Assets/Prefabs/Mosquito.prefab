@@ -11,13 +11,14 @@ GameObject:
   - component: {fileID: 681555076040413774}
   - component: {fileID: 6643075999346390834}
   - component: {fileID: 2709086086826222705}
+  - component: {fileID: -8414111715765967348}
   - component: {fileID: 2737742745062532021}
   - component: {fileID: 5040282863954130378}
   - component: {fileID: 5357734176219207551}
   - component: {fileID: 1644482327141134275}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mosquito
-  m_TagString: Untagged
+  m_TagString: Mosquito
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,8 +32,8 @@ Transform:
   m_GameObject: {fileID: 2431319315715394703}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -955, y: 596, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 400, y: 400, z: 400}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -77,16 +78,16 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingOrder: 4
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 0.6509434, g: 0.17440368, b: 0.17440368, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.2, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!58 &2709086086826222705
@@ -104,7 +105,28 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 136.55
+  m_Radius: 0.09
+--- !u!50 &-8414111715765967348
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431319315715394703}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!95 &2737742745062532021
 Animator:
   serializedVersion: 4
@@ -248,13 +270,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f771d9af6df2be348be785e2d4427f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDebug: 0
+  _isDebug: 1
   _soundManager: {fileID: 5357734176219207551}
   _animator: {fileID: 2737742745062532021}
   _stats:
     MaxHP: 10
     HP: 0
     Damage: 20
-    AttackTime: 0.05
+    AttackTime: 0.2
     Speed: 100
   Spawner: {fileID: 0}

@@ -24,10 +24,8 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
     {
         _eventManager = EventManager.GetEventManager();
         _eventManager.OnStartGame.AddListener(Restart);
-        _eventManager.OnStartGame?.Invoke();
     }
 
-    [ContextMenu("Restart")]
     private void Restart()
     {
         if (_isCool)
@@ -89,5 +87,10 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
 
             _isCool = true;
         }
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

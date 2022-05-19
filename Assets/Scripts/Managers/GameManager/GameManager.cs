@@ -55,8 +55,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        _mosquitoSpawner.MoveMosquitos();
         _player.AttackControl();
+    }
+
+    private void FixedUpdate()
+    {
+        _mosquitoSpawner.MoveMosquitos();
     }
 
     [ContextMenu("Restart")]
@@ -72,8 +76,6 @@ public class GameManager : MonoBehaviour
     {
         _restartMenu.ShowRestart() ;
         _UI.SetActive(false);
-
-        
     }
 
     public void LoadScene(int index)

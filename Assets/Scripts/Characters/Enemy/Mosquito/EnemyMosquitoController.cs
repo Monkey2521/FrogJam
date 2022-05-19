@@ -27,21 +27,28 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
         _eventManager = EventManager.GetEventManager();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (_isDebug) Debug.Log("Collision with " + collision.name);
+        if (_isDebug) Debug.Log("Collision with " + collision.gameObject.name);
 
-        if (collision.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
-            MakeDamage(collision as IDamageable);
+
+            MakeDamage(collision.gameObject.GetComponent<FrogKing>());
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         _attackTimer -= Time.deltaTime;
 
-        if (_attackTimer <= 0f && collision.tag == "Player") MakeDamage(collision as IDamageable);
+        if (_attackTimer <= 0f && collision.gameObject.tag == "Player") 
+            MakeDamage(collision.gameObject.GetComponent<FrogKing>());
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        Debug.Log("Exit");
     }
 
     public void TakeDamage(float damage)
@@ -68,6 +75,8 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
 
     public void Move(Vector3 targetPos)
     {
+        if (_isSucking) return;
+
         Vector3 currentPos = transform.position;
 
         transform.position += new Vector3
@@ -76,5 +85,10 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
                                     targetPos.y - currentPos.y, 
                                     currentPos.z
                                 ).normalized * Speed * GameManager.DifficultyMultiplier * Time.deltaTime;
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

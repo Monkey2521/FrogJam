@@ -21,7 +21,9 @@ public class DamageManager : MonoBehaviour
 
         for (int i = 0; i < _maxDamageCount; i++)
         {
-            _damagePull.Add((DamageUI)Instantiate(_damagePrefab, _damageParent);
+            _damagePull.Add((DamageUI)Instantiate(_damagePrefab, _damageParent));
+            _damagePull[i].damageManager = this;
+            _damagePull[i].gameObject.SetActive(false);
         }
     }
 
@@ -29,11 +31,13 @@ public class DamageManager : MonoBehaviour
     {
         DamageUI currentDamage = _damagePull?[0];
         _damagePull.Remove(currentDamage);
-        //currentDamage.SetDamage(damage, target);
+        currentDamage.gameObject.SetActive(true);
+        currentDamage.SetDamage(damage, target.GetTransform());
     }
 
-    public static void ReturnToPull(DamageUI damageUI)
+    public void ReturnToPull(DamageUI damageUI)
     {
-
+        damageUI.gameObject.SetActive(false);
+        _damagePull.Add(damageUI);
     }
 }

@@ -48,6 +48,7 @@ public class MosquitoSpawner : MonoBehaviour
 
         _eventManager = EventManager.GetEventManager();
         _eventManager.OnEnemySpawned.AddListener(AutoSpawner);
+        _eventManager.OnStartGame.AddListener(SpawnMosuito);
     }
 
     private async void AutoSpawner ()
@@ -59,7 +60,6 @@ public class MosquitoSpawner : MonoBehaviour
             SpawnMosuito();
     }
 
-    [ContextMenu("Spawn enemy")]
     private void SpawnMosuito()
     {
         int index = Random.Range(0, _pull.Count);

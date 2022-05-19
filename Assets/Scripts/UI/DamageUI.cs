@@ -9,13 +9,16 @@ public class DamageUI : MonoBehaviour
     [SerializeField] private Text _damageText;
     [SerializeField] private Animator _animator;
 
-    private void Start()
-    {
-        
-    }
+    [HideInInspector] public DamageManager damageManager;
 
     public void SetDamage(float damage, Transform parent)
     {
         _damageText.text = ((int)damage).ToString();
+        _damageText.transform.position = parent.position;
+    }
+
+    public void ReturnToPull()
+    {
+        damageManager.ReturnToPull(this);
     }
 }
