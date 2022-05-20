@@ -13,6 +13,5 @@ public abstract class ClickableObject : MonoBehaviour, IClickable
     public virtual void OnPointerClick (PointerEventData pointerEventData)
     {
         if (_isDebug) Debug.Log("Click on " + name);
-        _soundManager.PlaySound(SoundTypes.OnClick);
     }
 }

@@ -14,6 +14,8 @@ public class EventManager : MonoBehaviour
     public UnityEvent<IAttackable, IDamageable, float> OnCharacterTakeDamage;
     public UnityEvent OnEnemyDeath;
     public UnityEvent OnPlayerDeath;
+    public UnityEvent<IDamageable> OnEnemyClicked;
+    public UnityEvent OnPlayerChangeHP;
 
     private static EventManager _instance;
 
@@ -31,10 +33,4 @@ public class EventManager : MonoBehaviour
     }
 
     public static EventManager GetEventManager() => _instance;
-
-    [ContextMenu("Kill enemy")]
-    private void Test()
-    {
-        OnEnemyDeath?.Invoke();
-    }
 }

@@ -24,6 +24,7 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
     {
         _eventManager = EventManager.GetEventManager();
         _eventManager.OnStartGame.AddListener(Restart);
+        _eventManager.OnEnemyClicked.AddListener(MakeDamage);
     }
 
     private void Restart()
@@ -35,6 +36,7 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
         }
 
         _stats.Init();
+        _eventManager.OnPlayerChangeHP?.Invoke();
 
         _glasses.gameObject.transform.position = _glassesDefaultPosition;
         _glasses.gameObject.SetActive(false);
@@ -52,19 +54,25 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
     {
         _stats.HP -= damage;
 
+        _soundManager.PlaySound(SoundTypes.OnFrogTakeDamage);
+        _eventManager.OnPlayerChangeHP?.Invoke();
+
         if (_stats.HP <= 0)
         {
             _eventManager.OnPlayerDeath?.Invoke();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
-    public void MakeDamage (IDamageable target)
+    public void MakeDamage(IDamageable target)
     {
-        target.TakeDamage(Damage);
-        _eventManager.OnCharacterTakeDamage?.Invoke(this, target, Damage);
-
-        _attackTimer = AttackTime;
+        if (_attackTimer <= 0)
+        {
+            target.TakeDamage(Damage);
+            _eventManager.OnCharacterTakeDamage?.Invoke(this, target, Damage);
+            _attackTimer = AttackTime;
+        }
+        else if (_isDebug) Debug.Log("Not time yet");
     }
 
     private void TakeGlasses()
@@ -86,6 +94,8 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
             if (_isDebug) Debug.Log("COOL!");
 
             _isCool = true;
+
+            _soundManager.PlaySound(SoundTypes.OnFrogGetGlasses);
         }
     }
 

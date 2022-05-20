@@ -12,12 +12,7 @@ public class HealthUI : MonoBehaviour
     private void Start()
     {
         _eventManager = EventManager.GetEventManager();
-        _eventManager.OnCharacterTakeDamage.AddListener(ShowDamage);
-    }
-
-    private void ShowDamage (IAttackable dealer, IDamageable target, float damage)
-    {
-        if (target is FrogKing) UpdateUI();
+        _eventManager.OnPlayerChangeHP.AddListener(UpdateUI);
     }
 
     public void UpdateUI()

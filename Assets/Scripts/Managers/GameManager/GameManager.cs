@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         _eventManager = EventManager.GetEventManager();
         _eventManager.OnEnemyDeath.AddListener(UpgradeDifficulty);
         _eventManager.OnPlayerDeath.AddListener(StopGame);
+
+        _eventManager.OnStartGame?.Invoke();
     }
 
     private void UpgradeDifficulty ()
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
     {
         _restartMenu.HideRestart();
         _UI.SetActive(true);
+        _player.gameObject.SetActive(true);
 
         _eventManager.OnStartGame?.Invoke();
     }

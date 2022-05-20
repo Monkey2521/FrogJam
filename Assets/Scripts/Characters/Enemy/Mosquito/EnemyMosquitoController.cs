@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable, IMoveable
 {
@@ -15,16 +16,22 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
 
     private EventManager _eventManager;
 
-    [HideInInspector] public MosquitoSpawner Spawner;
+    public MosquitoSpawner Spawner;
 
-    private void Awake()
-    {
-        _stats.Init();
-    }
+    private Inventory _inventory;
+    [SerializeField] private ItemInventory _reward;
 
     private void Start()
     {
         _eventManager = EventManager.GetEventManager();
+        _eventManager.OnPlayerDeath.AddListener(ReturnToPool);
+
+        _inventory = Inventory.GetInventory();
+    }
+
+    public void Init()
+    {
+        _stats.Init();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -46,36 +53,48 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
             MakeDamage(collision.gameObject.GetComponent<FrogKing>());
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        Debug.Log("Exit");
-    }
-
     public void TakeDamage(float damage)
     {
         _stats.HP -= damage;
+
+        _soundManager.PlaySound(SoundTypes.OnMosquitoTakeDamage);
 
         if (_stats.HP <= 0)
         {
             _isSucking = false;
 
-            Spawner.AddToPull(this);
+            ReturnToPool();       
             _eventManager.OnEnemyDeath?.Invoke();
+
+            ItemInventory reward = new ItemInventory(_reward);
+            reward.AddCount((int)(reward.Count * GameManager.DifficultyMultiplier) - reward.Count);
+
+            _inventory.Add(reward);
         }
     }
 
     public void MakeDamage(IDamageable target)
     {
-        target.TakeDamage((_isSucking ? Damage * AttackTime : Damage) * GameManager.DifficultyMultiplier);
-        _eventManager.OnCharacterTakeDamage?.Invoke(this, target, Damage);
+        float damage = (_isSucking ? Damage * AttackTime : Damage) * GameManager.DifficultyMultiplier;
+
+        target.TakeDamage(damage);
+        _eventManager.OnCharacterTakeDamage?.Invoke(this, target, damage);
+
+        if (_isSucking) _soundManager.PlaySound(SoundTypes.OnMosquitoSuck);
+
+        if (_isDebug)
+        {
+            Debug.Log("Make " + damage + " damage. Time: " + Time.frameCount);
+        }
 
         _attackTimer = AttackTime;
         _isSucking = true;
+
     }
 
     public void Move(Vector3 targetPos)
     {
-        if (_isSucking) return;
+        if (_isSucking || !gameObject.activeSelf) return;
 
         Vector3 currentPos = transform.position;
 
@@ -85,10 +104,24 @@ public class EnemyMosquitoController : ClickableObject, IDamageable, IAttackable
                                     targetPos.y - currentPos.y, 
                                     currentPos.z
                                 ).normalized * Speed * GameManager.DifficultyMultiplier * Time.deltaTime;
+
+        _soundManager.PlaySound(SoundTypes.OnMosquitoMove);
     }
 
     public Transform GetTransform()
     {
         return transform;
+    }
+
+    public override void OnPointerClick(PointerEventData pointerEventData)
+    {
+        base.OnPointerClick(pointerEventData);
+
+        _eventManager.OnEnemyClicked?.Invoke(this);
+    }
+
+    private void ReturnToPool()
+    {
+        Spawner.AddToPool(this);
     }
 }

@@ -18,6 +18,8 @@ public class MosquitoSpawner : MonoBehaviour
 
     [SerializeField] private GameObject _target;
 
+    private bool _isSpawning = false;
+
     private EventManager _eventManager;
 
     #region Spawn area vars
@@ -39,6 +41,7 @@ public class MosquitoSpawner : MonoBehaviour
         {
             EnemyMosquitoController enemy = (EnemyMosquitoController)Instantiate(_mosquitoPrefab, transform);
             enemy.transform.position = GetRandomPosition();
+            enemy.Spawner = this;
             enemy.gameObject.SetActive(false);
 
             _pull.Add(enemy);
@@ -47,16 +50,31 @@ public class MosquitoSpawner : MonoBehaviour
         if (_isDebug) Debug.Log("Spawned " + _pull.Count + " mosquitos");
 
         _eventManager = EventManager.GetEventManager();
-        _eventManager.OnEnemySpawned.AddListener(AutoSpawner);
+        _eventManager.OnStartGame.AddListener(ChangeSpawning);
         _eventManager.OnStartGame.AddListener(SpawnMosuito);
+        _eventManager.OnPlayerDeath.AddListener(ChangeSpawning);
+    }
+
+    private void ChangeSpawning()
+    {
+        if (_isSpawning)
+        {
+            _eventManager.OnEnemySpawned.RemoveListener(AutoSpawner);
+        }
+        else
+        {
+            _eventManager.OnEnemySpawned.AddListener(AutoSpawner);
+        }
+
+        _isSpawning = !_isSpawning;
     }
 
     private async void AutoSpawner ()
     {
         if (_mosquitos.Count > 0) 
             await Task.Delay((int)(_spawnDelay * 1000f / GameManager.DifficultyMultiplier));
-        
-        if (_pull.Count > 0)
+
+        if (_pull.Count > 0 && _isSpawning)
             SpawnMosuito();
     }
 
@@ -66,6 +84,7 @@ public class MosquitoSpawner : MonoBehaviour
 
         EnemyMosquitoController enemy = _pull[index];
         enemy.gameObject.SetActive(true);
+        enemy.Init();
 
         _mosquitos.Add(enemy);
         _pull.Remove(enemy);
@@ -85,7 +104,7 @@ public class MosquitoSpawner : MonoBehaviour
         }
     }
 
-    public void AddToPull(EnemyMosquitoController mosquito)
+    public void AddToPool(EnemyMosquitoController mosquito)
     {
         if (_mosquitos.Contains(mosquito))
         {

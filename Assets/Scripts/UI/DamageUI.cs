@@ -17,8 +17,8 @@ public class DamageUI : MonoBehaviour
         _damageText.transform.position = parent.position;
     }
 
-    public void ReturnToPull()
+    public void ReturnToPool()
     {
-        damageManager.ReturnToPull(this);
+        damageManager.ReturnToPool(this);
     }
 }

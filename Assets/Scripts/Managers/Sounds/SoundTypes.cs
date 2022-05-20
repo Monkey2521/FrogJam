@@ -1,7 +1,10 @@
 public enum SoundTypes
 {
-    OnClick,
-    OnBuild,
-    OnReplace,
-    OnDestroy
+    OnClickUI,
+    OnMosquitoTakeDamage,
+    OnMosquitoSuck,
+    OnMosquitoMove,
+    OnFrogTakeDamage,
+    OnFrogGetGlasses,
+    OnDifficultyUpgrade
 };

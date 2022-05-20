@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] protected AudioSource _audioSource;
-    [SerializeField] protected List<Sound> _sounds = new List<Sound>();
+    [SerializeField] protected List<Sound> _sounds;
 
     protected bool _isPlaying;
 

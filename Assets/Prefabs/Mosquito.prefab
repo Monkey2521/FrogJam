@@ -124,7 +124,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!95 &2737742745062532021
@@ -257,7 +257,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isDebug: 0
   _audioSource: {fileID: 5040282863954130378}
-  _sounds: []
+  _sounds:
+  - _soundType: 1
+    _clip: {fileID: 0}
+  - _soundType: 2
+    _clip: {fileID: 0}
+  - _soundType: 3
+    _clip: {fileID: 0}
 --- !u!114 &1644482327141134275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,13 +276,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f771d9af6df2be348be785e2d4427f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDebug: 1
+  _isDebug: 0
   _soundManager: {fileID: 5357734176219207551}
   _animator: {fileID: 2737742745062532021}
   _stats:
     MaxHP: 10
     HP: 0
     Damage: 20
-    AttackTime: 0.2
+    AttackTime: 0.5
     Speed: 100
   Spawner: {fileID: 0}
+  _reward:
+    _item: {fileID: 11400000, guid: 607c569dc1c55e84eb0a4b620c4de178, type: 2}
+    _count: 5
