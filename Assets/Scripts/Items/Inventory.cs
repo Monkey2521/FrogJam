@@ -11,6 +11,7 @@ public sealed class Inventory : MonoBehaviour
     private int _inventoryCapacity = 1; 
     
     [SerializeField] private List<ItemInventory> _items = new List<ItemInventory>();
+    public List<ItemInventory> Items => _items;
     
     private static Inventory _instance;
     private EventManager _eventManager;
@@ -31,6 +32,17 @@ public sealed class Inventory : MonoBehaviour
     private void Start()
     {
         _eventManager = EventManager.GetEventManager();
+        _eventManager.OnStartGame.AddListener(Restart);
+    }
+
+    private void Restart()
+    {
+        if (_items[0].Item.Name == "Gold")
+        {
+            _items[0].RemoveCount(_items[0].Count);
+
+            _eventManager.OnInventoryUpdate?.Invoke();
+        }
     }
 
     #region Operations
@@ -67,13 +79,15 @@ public sealed class Inventory : MonoBehaviour
 
     }
 
-    public bool Remove(ItemInventory item, int count = 1)
+    public bool Remove(Item item, int count = 1)
     {
-        if (InInventory (item.Item, out int index))
+        if (InInventory (item, out int index))
         {
             if (_items[index].RemoveCount(count))
             {
                 if (_items[index].Count == 0) { _items.RemoveAt(index); }
+
+                _eventManager.OnInventoryUpdate?.Invoke();
 
                 return true;
             }
@@ -94,7 +108,7 @@ public sealed class Inventory : MonoBehaviour
     }
     #endregion
 
-    private bool InInventory (Item item, out int index)
+    public bool InInventory (Item item, out int index)
     {
         index = 0;
 
@@ -113,20 +127,13 @@ public sealed class Inventory : MonoBehaviour
         return false;
     }
 
-    public bool EnoughResources(List<ItemInventory> requireItems)
+    public bool EnoughResources(ItemInventory requiredItem)
     {
-        foreach (ItemInventory requireItem in requireItems)
+        if (InInventory(requiredItem.Item, out int index))
         {
-            if (InInventory(requireItem.Item, out int index))
-            {
-                if (_items[index].Count < requireItem.Count)
-                {
-                    if (_isDebug) Debug.Log("Not enough resources! "); 
-                    return false;
-                }
-            }
+            return _items[index].Count >= requiredItem.Count;
         }
-
-        return true;
+     
+        return false;
     }
 }

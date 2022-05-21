@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f25638b8a229647948e5f39d78e06f, type: 3}
+  m_Name: Lifesteal
+  m_EditorClassIdentifier: 
+  _name: Lifesteal
+  _description: Heal player on 5% of dealed damage
+  _defaultCost:
+    _item: {fileID: 11400000, guid: 607c569dc1c55e84eb0a4b620c4de178, type: 2}
+    _count: 500
+  _additionalCostPerLevel: 250
+  _maxLevel: 10
+  _icon: {fileID: 0}
