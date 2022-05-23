@@ -612,7 +612,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.54969347, y: 0}
   m_AnchorMax: {x: 0.846, y: 1}
-  m_AnchoredPosition: {x: 0.03756714, y: -0.26999664}
+  m_AnchoredPosition: {x: 0.037597656, y: -0.269989}
   m_SizeDelta: {x: -0.07489, y: -0.53999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &307056755
@@ -628,13 +628,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelUpText: {fileID: 1400006984}
-  _levelUpUpgrade: {fileID: 11400000, guid: e31fd754b33468e44a7c31c872736232, type: 2}
-  _levelUpItem:
+  up1:
     _upgrade: {fileID: 11400000, guid: e31fd754b33468e44a7c31c872736232, type: 2}
     _level: 0
   _lifestealText: {fileID: 972493664}
-  _lifestealUpgrade: {fileID: 11400000, guid: 6725f2c09288def478893dc34d4e265b, type: 2}
-  _lifestealItem:
+  up2:
     _upgrade: {fileID: 11400000, guid: 6725f2c09288def478893dc34d4e265b, type: 2}
     _level: 0
   _soundManager: {fileID: 1051152667}

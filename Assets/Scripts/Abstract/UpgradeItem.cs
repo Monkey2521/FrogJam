@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class UpgradeItem
+public abstract class UpgradeItem
 {
     [SerializeField] private Upgrade _upgrade;
     public Upgrade upgrade => _upgrade;
@@ -11,6 +11,8 @@ public class UpgradeItem
 
     [SerializeField] private int _level = 0;
     public int Level => _level;
+
+    public UpgradeItem() { }
 
     public UpgradeItem (Upgrade upgrade)
     {
@@ -34,4 +36,6 @@ public class UpgradeItem
 
         _cost = _upgrade.DefaultCost.Count + _upgrade.AdditionalCostPerLevel * Level;
     }
+
+    public abstract void TakeEffect();
 }

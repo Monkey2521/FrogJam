@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class FrogKing : ClickableObject, IDamageable, IAttackable, IUpgradable
+public class FrogKing : ClickableObject, IDamageable, IAttackable
 {
     [SerializeField] private Animator _animator;
 
@@ -11,9 +12,6 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable, IUpgradable
     public float Damage => _stats.Damage;
     public float AttackTime => _stats.AttackTime;
     private float _attackTimer = 0;
-
-    private List<UpgradeItem> _upgrades = new List<UpgradeItem>();
-    public List<UpgradeItem> Upgrades => _upgrades;
 
     [SerializeField] private GameObject _crown;
     [SerializeField] private Animator _glasses;
@@ -47,8 +45,6 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable, IUpgradable
 
         _eventManager.OnEnemyDeath.AddListener(TakeGlasses);
         _isCool = false;
-
-        _upgrades.Clear();
     }
 
     public void AttackControl ()
@@ -108,30 +104,5 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable, IUpgradable
         return transform;
     }
 
-    public bool GetUpgrade(Upgrade upgrade)
-    {
-        if (HaveUpgrade(upgrade, out int index))
-            _upgrades[index].AddLevel();
-        else
-            _upgrades.Add(new UpgradeItem(upgrade));
 
-        if (_isDebug) Debug.Log("Get " + upgrade.Name + " upgrade");
-
-        return true;
-    }
-
-    private bool HaveUpgrade(Upgrade upgrade, out int index)
-    {
-        index = 0;
-        
-        foreach (UpgradeItem item in _upgrades)
-        {
-            if (item.upgrade == upgrade)
-                return true;
-            
-            index++;
-        }
-
-        return false;
-    }
 }
