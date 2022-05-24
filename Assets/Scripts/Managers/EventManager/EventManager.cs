@@ -16,6 +16,7 @@ public class EventManager : MonoBehaviour
     public UnityEvent OnPlayerDeath;
     public UnityEvent<IDamageable> OnEnemyClicked;
     public UnityEvent OnPlayerChangeHP;
+    public UnityEvent<int> OnUpgradeUIClicked;
 
     private static EventManager _instance;
 

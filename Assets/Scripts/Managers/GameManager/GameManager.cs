@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
         _UI.SetActive(true);
         _player.gameObject.SetActive(true);
 
+        _difficultyMultiplier = 1f;
+
         _eventManager.OnStartGame?.Invoke();
     }
 

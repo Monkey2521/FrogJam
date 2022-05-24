@@ -106,6 +106,11 @@ public sealed class Inventory : MonoBehaviour
         }
 
     }
+
+    public bool Remove(ItemInventory itemInventory)
+    {
+        return Remove(itemInventory.Item, itemInventory.Count);
+    }
     #endregion
 
     public bool InInventory (Item item, out int index)

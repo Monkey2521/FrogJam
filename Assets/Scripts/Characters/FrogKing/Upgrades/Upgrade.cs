@@ -11,4 +11,7 @@ public class Upgrade : Item
 
     [SerializeField] private int _maxLevel;
     public int MaxLevel => _maxLevel;
+
+    [SerializeField] private CharacterStats _additionalStats;
+    public CharacterStats AdditionalStats => _additionalStats;
 }

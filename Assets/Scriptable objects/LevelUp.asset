@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: LevelUp
   _description: Add 5 MaxHP
+  _icon: {fileID: 0}
   _defaultCost:
     _item: {fileID: 11400000, guid: 607c569dc1c55e84eb0a4b620c4de178, type: 2}
     _count: 100
   _additionalCostPerLevel: 50
   _maxLevel: 50
-  _icon: {fileID: 0}
+  _additionalStats:
+    MaxHP: 5
+    HP: 0
+    Damage: 0
+    AttackTime: 0
+    Speed: 0

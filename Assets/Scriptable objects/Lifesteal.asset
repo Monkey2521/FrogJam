@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: Lifesteal
   m_EditorClassIdentifier: 
   _name: Lifesteal
-  _description: Heal player on 5% of dealed damage
+  _description: Heal character on 5% of dealed damage
+  _icon: {fileID: 0}
   _defaultCost:
     _item: {fileID: 11400000, guid: 607c569dc1c55e84eb0a4b620c4de178, type: 2}
-    _count: 500
-  _additionalCostPerLevel: 250
+    _count: 200
+  _additionalCostPerLevel: 200
   _maxLevel: 10
-  _icon: {fileID: 0}
+  _additionalStats:
+    MaxHP: 0
+    HP: 0
+    Damage: 0
+    AttackTime: 0
+    Speed: 0

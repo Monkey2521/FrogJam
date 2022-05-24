@@ -1,41 +1,59 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
-public abstract class UpgradeItem
+public class UpgradeItem
 {
     [SerializeField] private Upgrade _upgrade;
     public Upgrade upgrade => _upgrade;
 
+    private UpgradeUI _upgradeUI;
+
     private int _cost;
     public int Cost => _cost;
 
-    [SerializeField] private int _level = 0;
+    private int _level;
     public int Level => _level;
 
-    public UpgradeItem() { }
+    public bool IsMaxLevel => Level == _upgrade.MaxLevel;
 
-    public UpgradeItem (Upgrade upgrade)
-    {
-        _upgrade = upgrade;
-        _level = 1;
+    #region Constructors
+    protected UpgradeItem() { }
 
-        _cost = _upgrade.DefaultCost.Count + _upgrade.AdditionalCostPerLevel * Level;
-    }
+    public UpgradeItem (Upgrade upgrade, UpgradeUI upgradeUI) : this(upgrade, 0, upgradeUI) { }
 
-    public UpgradeItem(Upgrade upgrade, int level)
+    public UpgradeItem(Upgrade upgrade, int level, UpgradeUI upgradeUI)
     {
         _upgrade = upgrade;
         _level = level;
+        _upgradeUI = upgradeUI;
 
         _cost = _upgrade.DefaultCost.Count + _upgrade.AdditionalCostPerLevel * Level;
+        
+        SetText();
     }
+    #endregion
 
     public void AddLevel()
     {
         _level++;
 
         _cost = _upgrade.DefaultCost.Count + _upgrade.AdditionalCostPerLevel * Level;
+
+        SetText();
     }
 
-    public abstract void TakeEffect();
+    protected void SetText()
+    {
+        string buyText = ":\nbuy (" + Cost + ")";
+        string upgradeText = ":\nLevel = " + Level + "\nupgrade (" + Cost + ")";
+        string maxLevelText = ":\nMAX LEVEL";
+
+        _upgradeUI.SetText(_upgrade.Name + (Level > 0 ? (IsMaxLevel ? maxLevelText : upgradeText) : buyText));
+    }
+
+    public virtual void TakeEffect()
+    {
+        Debug.Log("Take " + _upgrade.Name + " upgrade");
+    }
 }
