@@ -1,9 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class LevelUpUpgrade : UpgradeItem
-{
-    public LevelUpUpgrade (Upgrade upgrade, UpgradeUI upgradeUI)
+public class MegaAttackUpgrade : UpgradeItem
+{ 
+    public MegaAttackUpgrade(Upgrade upgrade, UpgradeUI upgradeUI)
     {
         _upgrade = upgrade;
         _level = default;

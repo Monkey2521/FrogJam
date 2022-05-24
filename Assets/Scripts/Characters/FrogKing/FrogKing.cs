@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class FrogKing : ClickableObject, IDamageable, IAttackable
 {
     [SerializeField] private Animator _animator;
 
     [SerializeField] private CharacterStats _stats;
+    [SerializeField] private CharacterStats _additionalStats;
     public float MaxHP => _stats.MaxHP;
     public float HP => _stats.HP;
     public float Damage => _stats.Damage;
@@ -40,11 +39,15 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
         _stats.Init();
         _eventManager.OnPlayerChangeHP?.Invoke();
 
+        Debug.Log(HP);
+
         _glasses.gameObject.transform.position = _glassesDefaultPosition;
         _glasses.gameObject.SetActive(false);
 
         _eventManager.OnEnemyDeath.AddListener(TakeGlasses);
         _isCool = false;
+
+        RevealStatsUpgrade();
     }
 
     public void AttackControl ()
@@ -55,6 +58,8 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
     public void TakeDamage(float damage)
     {
         _stats.HP -= damage;
+
+        if (_stats.HP > MaxHP) _stats.HP = MaxHP;
 
         _soundManager.PlaySound(SoundTypes.OnFrogTakeDamage);
         _eventManager.OnPlayerChangeHP?.Invoke();
@@ -104,5 +109,18 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
         return transform;
     }
 
+    public void GetStatsUpgrade (CharacterStats stats)
+    {
+        _additionalStats += stats;
 
+        _stats += stats;
+
+        _eventManager.OnPlayerChangeHP?.Invoke();
+    }
+
+    private void RevealStatsUpgrade()
+    {
+        _stats -= _additionalStats;
+        _additionalStats = new CharacterStats();
+    }
 }

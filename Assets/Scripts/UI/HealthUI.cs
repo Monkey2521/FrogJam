@@ -20,7 +20,7 @@ public class HealthUI : MonoBehaviour
         _playerHealthBar.fillAmount = _player.HP / _player.MaxHP;
         _playerHealthPoints.text = (int)_player.HP + " / " + _player.MaxHP;
         
-        if (_player.HP / _player.MaxHP <= 1f && _player.HP / _player.MaxHP >= 0.66f)
+        if (_player.HP / _player.MaxHP > 0.66f)
         {
             _playerHealthPoints.color = Color.green;
         }

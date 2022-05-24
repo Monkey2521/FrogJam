@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60f25638b8a229647948e5f39d78e06f, type: 3}
-  m_Name: LevelUp
+  m_Name: MegaAttack
   m_EditorClassIdentifier: 
-  _name: LevelUp
-  _description: Add 5 MaxHP
+  _name: Attack+
+  _description: Adds 2 damage and reduce attack time for 0.01
   _icon: {fileID: 0}
-  _type: 0
+  _type: 2
   _defaultCost:
     _item: {fileID: 11400000, guid: 607c569dc1c55e84eb0a4b620c4de178, type: 2}
-    _count: 100
-  _additionalCostPerLevel: 50
-  _maxLevel: 50
+    _count: 150
+  _additionalCostPerLevel: 25
+  _maxLevel: 10
   _additionalStats:
-    MaxHP: 5
-    HP: 2.5
-    Damage: 0
-    AttackTime: 0
+    MaxHP: 0
+    HP: 0
+    Damage: 2
+    AttackTime: -0.01
     Speed: 0

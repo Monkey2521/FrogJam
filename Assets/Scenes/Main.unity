@@ -628,8 +628,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isDebug: 0
   _upgrades:
-  - _upgrade: {fileID: 11400000, guid: e31fd754b33468e44a7c31c872736232, type: 2}
-  - _upgrade: {fileID: 11400000, guid: 6725f2c09288def478893dc34d4e265b, type: 2}
+  - {fileID: 11400000, guid: e31fd754b33468e44a7c31c872736232, type: 2}
+  - {fileID: 11400000, guid: 58515ab7bccd33846a21283ce93a2ab7, type: 2}
+  - {fileID: 11400000, guid: 6725f2c09288def478893dc34d4e265b, type: 2}
   _upgradePrefab: {fileID: 351840882708130250, guid: f251e5c840838d742b7a16314c2e846e, type: 3}
   _upgradeParent: {fileID: 307056754}
   _soundManager: {fileID: 1051152667}
@@ -3092,6 +3093,12 @@ MonoBehaviour:
     HP: 0
     Damage: 10
     AttackTime: 0.2
+    Speed: 0
+  _additionalStats:
+    MaxHP: 0
+    HP: 0
+    Damage: 0
+    AttackTime: 0
     Speed: 0
   _crown: {fileID: 1646642161}
   _glasses: {fileID: 1198541054}

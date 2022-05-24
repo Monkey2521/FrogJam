@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New upgrade", menuName = "Scriptable objects/Upgrade")]
 public class Upgrade : Item
 {
+    [SerializeField] protected UpgradeTypes _type;
+
     [SerializeField] private ItemInventory _defaultCost;
     public ItemInventory DefaultCost => _defaultCost;
 
@@ -14,4 +16,25 @@ public class Upgrade : Item
 
     [SerializeField] private CharacterStats _additionalStats;
     public CharacterStats AdditionalStats => _additionalStats;
+
+    [HideInInspector] public UpgradeItem BehaviorScript;
+
+    public void Init(UpgradeUI upgradeUI)
+    {
+        switch (_type)
+        {
+            case UpgradeTypes.Attack:
+                BehaviorScript = new MegaAttackUpgrade(this, upgradeUI);
+                break;
+            case UpgradeTypes.LevelUp:
+                BehaviorScript = new LevelUpUpgrade(this, upgradeUI);
+                break;
+            case UpgradeTypes.Lifesteal:
+                BehaviorScript = new LifestealUpgrade(this, upgradeUI);
+                break;
+            default:
+                Debug.Log("???");
+                break;
+        }
+    }
 }
