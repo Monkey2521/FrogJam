@@ -14,7 +14,7 @@ public class MosquitoSpawner : MonoBehaviour
     [SerializeField] private float _spawnDelay;
 
     private List<EnemyMosquitoController> _mosquitos = new List<EnemyMosquitoController>();
-    private List<EnemyMosquitoController> _pull = new List<EnemyMosquitoController>();
+    private List<EnemyMosquitoController> _pool = new List<EnemyMosquitoController>();
 
     [SerializeField] private GameObject _target;
 
@@ -40,14 +40,14 @@ public class MosquitoSpawner : MonoBehaviour
         for (int i = 0; i < _maxMosquitos; i++)
         {
             EnemyMosquitoController enemy = (EnemyMosquitoController)Instantiate(_mosquitoPrefab, transform);
-            enemy.transform.position = GetRandomPosition();
+            
             enemy.Spawner = this;
             enemy.gameObject.SetActive(false);
 
-            _pull.Add(enemy);
+            _pool.Add(enemy);
         }
 
-        if (_isDebug) Debug.Log("Spawned " + _pull.Count + " mosquitos");
+        if (_isDebug) Debug.Log("Spawned " + _pool.Count + " mosquitos");
 
         _eventManager = EventManager.GetEventManager();
         _eventManager.OnStartGame.AddListener(ChangeSpawning);
@@ -74,20 +74,21 @@ public class MosquitoSpawner : MonoBehaviour
         if (_mosquitos.Count > 0) 
             await Task.Delay((int)(_spawnDelay * 1000f / GameManager.DifficultyMultiplier));
 
-        if (_pull.Count > 0 && _isSpawning)
+        if (_pool.Count > 0 && _isSpawning)
             SpawnMosuito();
     }
 
     private void SpawnMosuito()
     {
-        int index = Random.Range(0, _pull.Count);
+        int index = Random.Range(0, _pool.Count);
 
-        EnemyMosquitoController enemy = _pull[index];
+        EnemyMosquitoController enemy = _pool[index];
+        enemy.transform.position = GetRandomPosition();
         enemy.gameObject.SetActive(true);
         enemy.Init();
 
         _mosquitos.Add(enemy);
-        _pull.Remove(enemy);
+        _pool.Remove(enemy);
 
         if (_isDebug) Debug.Log("Mosquito with ID: " + enemy.GetInstanceID() + " is active");
 
@@ -113,9 +114,8 @@ public class MosquitoSpawner : MonoBehaviour
         }
         else if (_isDebug) Debug.Log("Mosquito with ID: " + mosquito.GetInstanceID() + " not found!");
         
-        _pull.Add(mosquito);
+        _pool.Add(mosquito);
 
-        mosquito.gameObject.transform.position = GetRandomPosition();
         mosquito.gameObject.SetActive(false);
     }
 
