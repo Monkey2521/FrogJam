@@ -36,11 +36,6 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
             _stats.Damage /= _glassesMultiplier;
         }
 
-        _stats.Init();
-        _eventManager.OnPlayerChangeHP?.Invoke();
-
-        Debug.Log(HP);
-
         _glasses.gameObject.transform.position = _glassesDefaultPosition;
         _glasses.gameObject.SetActive(false);
 
@@ -48,6 +43,9 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
         _isCool = false;
 
         RevealStatsUpgrade();
+
+        _stats.Init();
+        _eventManager.OnPlayerChangeHP?.Invoke();
     }
 
     public void AttackControl ()
@@ -91,6 +89,9 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
             _stats.Damage *= _glassesMultiplier;
             _stats.MaxHP *= _glassesMultiplier;
 
+            _additionalStats.MaxHP *= _glassesMultiplier;
+            _additionalStats.Damage *= _glassesMultiplier;
+
             _stats.Init();
             _eventManager.OnPlayerChangeHP?.Invoke();
 
@@ -121,6 +122,8 @@ public class FrogKing : ClickableObject, IDamageable, IAttackable
     private void RevealStatsUpgrade()
     {
         _stats -= _additionalStats;
-        _additionalStats = new CharacterStats();
+        _additionalStats.ReInit();
+
+        _eventManager.OnPlayerChangeHP?.Invoke();
     }
 }

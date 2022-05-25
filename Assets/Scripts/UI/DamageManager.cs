@@ -34,8 +34,10 @@ public class DamageManager : MonoBehaviour
         DamageUI currentDamage = _damagePool?[0];
         _damagePool.Remove(currentDamage);
 
+        _damageParent.transform.position = target.GetTransform().position;
+
         currentDamage.gameObject.SetActive(true);
-        currentDamage.SetDamage(damage, target.GetTransform());
+        currentDamage.SetDamage(damage);
         _activeDamage.Add(currentDamage);
     }
 

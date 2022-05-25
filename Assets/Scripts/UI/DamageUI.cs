@@ -11,10 +11,9 @@ public class DamageUI : MonoBehaviour
 
     [HideInInspector] public DamageManager damageManager;
 
-    public void SetDamage(float damage, Transform parent)
+    public void SetDamage(float damage)
     {
         _damageText.text = ((int)damage).ToString();
-        _damageText.transform.position = parent.position;
     }
 
     public void ReturnToPool()
