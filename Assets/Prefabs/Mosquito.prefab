@@ -288,4 +288,4 @@ MonoBehaviour:
   Spawner: {fileID: 0}
   _reward:
     _item: {fileID: 11400000, guid: 607c569dc1c55e84eb0a4b620c4de178, type: 2}
-    _count: 100
+    _count: 10
